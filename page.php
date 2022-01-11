@@ -22,10 +22,27 @@
 
 	
 	<form class="choose"action="page.php" method="get">
-		<button class="types" type="submit" value="cats" name="cats">Cats</button>
-		<button class="types" type="submit" value="dogs" name="dogs">Dogs</button>
+		<button class="types" type="submit" value="cat" name="cat">Cats</button>
+		<button class="types" type="submit" value="dog" name="dog">Dogs</button>
 	</form>
-	
+	<?php
+
+	$pet_type=$_GET['pet_type'];
+	if(isset($_GET['pet_type'])) {
+		$sql = "SELECT pet_name, price FROM pet_details WHERE pet_type='$pet_type'";
+		//$result=mysql_query($sql);
+	} 
+
+	elseif (isset($_GET['cat'])) {
+		header("Location: page.php?pet_type=cat");
+	}
+	else
+	{
+		header("Location: page.php?pet_type=dog");
+		exit;
+	 }
+?>
+
 	<br><br>
 	<div class="wrapper">
 		<table class="table1">
@@ -47,7 +64,7 @@
 				die("Connection failed: " . $conn->connect_error);
 			}
 
-			$sql = "SELECT pet_name , pet_type, price FROM pet_details";
+			//$sql = "SELECT pet_name , pet_type, price FROM pet_details";
 			$result = $conn->query($sql);
 
 			if ($result->num_rows > 0) 
